@@ -79,15 +79,39 @@
 
     <TextView
         android:id="@+id/tv_gender"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/gender" />
 
-    <Spinner
-        android:id="@+id/spn_gender"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Base.Widget.AppCompat.Spinner.Underlined" />
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/rg_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/et_dummy"
+            android:layout_alignBottom="@+id/et_dummy"
+            android:orientation="horizontal" >
+            <RadioButton
+                android:id="@+id/rb_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/female"
+                android:checked="true" />
+            <RadioButton
+                android:id="@+id/rb_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"/>
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/et_dummy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_address"
@@ -115,18 +139,6 @@
         android:maxLength="4" />
 
     <TextView
-        android:id="@+id/tv_level_of_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/level_of_activity"/>
-
-    <Spinner
-        android:id="@+id/spn_level_of_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Base.Widget.AppCompat.Spinner.Underlined" />
-
-    <TextView
         android:id="@+id/tv_steps_per_mile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -137,6 +149,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number" />
+
+    <TextView
+        android:id="@+id/tv_level_of_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/level_of_activity"/>
+
+    <Spinner
+        android:id="@+id/spn_level_of_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined" />
 
     <Button
         android:id="@+id/btn_signup"

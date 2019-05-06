@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CalorieTracker</string>
+    <string name="app_name">Calorie Tracker</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -17,10 +17,8 @@
     <string name="height">Height</string>
     <string name="weight">Weight</string>
     <string name="gender">Sex</string>
-    <string-array name="gender_array">
-        <item>Female</item>
-        <item>Male</item>
-    </string-array>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
     <string name="address">Address</string>
     <string name="postcode">Postcode</string>
     <string name="level_of_activity">Level of Activity</string>
@@ -32,4 +30,9 @@
         <item>5</item>
     </string-array>
     <string name="steps_per_mile">Steps per Mile</string>
+    <string name="validation_empty">Can not be empty.</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_diet">My Daily Diet</string>
+    <string name="nav_report">Report</string>
+    <string name="nav_map">Map</string>
 </resources>
