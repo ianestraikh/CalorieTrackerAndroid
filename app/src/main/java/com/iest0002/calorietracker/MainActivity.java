@@ -1,8 +1,10 @@
 package com.iest0002.calorietracker;
 
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -74,22 +76,23 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Fragment nextFragment = null;
         if (id == R.id.nav_home) {
             // Handle the camera action
+            nextFragment = new HomeFragment();
         } else if (id == R.id.nav_diet) {
-
+            nextFragment = new DietFragment();
         } else if (id == R.id.nav_report) {
-
+            nextFragment = new ReportFragment();
         } else if (id == R.id.nav_map) {
-
+            nextFragment = new MapFragment();
         }
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_main, nextFragment).commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
