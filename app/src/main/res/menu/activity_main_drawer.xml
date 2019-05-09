@@ -13,6 +13,14 @@
             android:icon="@drawable/ic_face_black_24dp"
             android:title="@string/nav_diet" />
         <item
+            android:id="@+id/nav_steps"
+            android:icon="@drawable/ic_directions_walk_black_24dp"
+            android:title="@string/nav_steps" />
+        <item
+            android:id="@+id/nav_tracker"
+            android:icon="@drawable/ic_track_changes_black_24dp"
+            android:title="@string/nav_tracker" />
+        <item
             android:id="@+id/nav_report"
             android:icon="@drawable/ic_insert_chart_black_24dp"
             android:title="@string/nav_report" />

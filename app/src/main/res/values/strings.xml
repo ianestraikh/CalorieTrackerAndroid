@@ -32,7 +32,9 @@
     <string name="steps_per_mile">Steps per Mile</string>
     <string name="validation_empty">Can not be empty.</string>
     <string name="nav_home">Home</string>
-    <string name="nav_diet">My Daily Diet</string>
+    <string name="nav_diet">Diet</string>
     <string name="nav_report">Report</string>
     <string name="nav_map">Map</string>
+    <string name="nav_steps">Steps</string>
+    <string name="nav_tracker">Tracker</string>
 </resources>
