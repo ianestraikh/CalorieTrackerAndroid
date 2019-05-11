@@ -16,19 +16,19 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vHome = inflater.inflate(R.layout.fragment_home, container, false);
-
-        imgFitness = vHome.findViewById(R.id.img_fitness);
-
+        /*
+        imgFitness = vHome.findViewById(R.id.img_fitness); */
         return vHome;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        /*
         final int[] imgFitnessResources = {R.drawable.img_fitness_1, R.drawable.img_fitness_2,
                 R.drawable.img_fitness_3, R.drawable.img_fitness_4, R.drawable.img_fitness_5,
                 R.drawable.img_fitness_6, R.drawable.img_fitness_7, R.drawable.img_fitness_8};
         final int rnd = new Random().nextInt(7);
-        imgFitness.setImageResource(imgFitnessResources[rnd]);
+        imgFitness.setImageResource(imgFitnessResources[rnd]);*/
     }
 }

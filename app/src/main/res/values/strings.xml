@@ -37,4 +37,6 @@
     <string name="nav_map">Map</string>
     <string name="nav_steps">Steps</string>
     <string name="nav_tracker">Tracker</string>
+    <string name="food_category">Category</string>
+    <string name="food">Food</string>
 </resources>

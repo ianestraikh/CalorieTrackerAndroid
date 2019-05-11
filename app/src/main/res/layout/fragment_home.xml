@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,24 +34,15 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
-
     <ImageView
         android:id="@+id/img_fitness"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/img_fitness_1" />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
+        android:tint="@android:color/tertiary_text_dark"
+        app:srcCompat="@drawable/ic_apple"
+        tools:ignore="VectorDrawableCompat" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -74,7 +64,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/btn_goalEdit"
+            android:id="@+id/btn_goal_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -95,5 +85,4 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_labelGoal" />
     </android.support.constraint.ConstraintLayout>
-
 </LinearLayout>
