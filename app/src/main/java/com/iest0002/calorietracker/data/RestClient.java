@@ -1,10 +1,9 @@
-package com.iest0002.calorietracker;
+package com.iest0002.calorietracker.data;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.iest0002.calorietracker.entities.User;
 
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
@@ -14,17 +13,17 @@ import java.util.Scanner;
 public class RestClient {
 
     public static final String TAG = RestClient.class.getName();
-    public static final String BASE_URL = "http://118.138.85.205:8080/CalorieTrackerBackend/webresources/";
+    public static final String BASE_URL = "http://118.138.65.130:8080/CalorieTrackerBackend/webresources/";
 
     public static final String CREATE_USER_METHOD_PATH = "entities.usr/";
     public static final String CREATE_CRED_METHOD_PATH = "entities.credential/";
-    public static final String USER_LAST_ID_METHOD_PATH = "entities.usr/lastUserId";
     public static final String USERNAME_EXISTS_METHOD_PATH = "entities.credential/usernameExists/";
+    public static final String FIND_CRED_BY_USERNAME = "entities.credential/findByUsername/";
 
     /**
      * ref: FIT5046 Week7 tutorial
      */
-    public static String postEntity(Object object, String methodPath) {
+    public static String post(Object object, String methodPath) {
         //initialise
         URL url;
         HttpURLConnection conn = null;
@@ -68,7 +67,7 @@ public class RestClient {
         return result.toString();
     }
 
-    public static String getPlainText(String methodPath, String... params) {
+    public static String get(String methodPath, String... params) {
         URL url;
         HttpURLConnection conn = null;
         if (params != null) {
@@ -86,8 +85,8 @@ public class RestClient {
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-Type", "text/plain");
-            conn.setRequestProperty("Accept", "text/plain");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "application/json");
             //Read the response
             Scanner inStream = new Scanner(conn.getInputStream());
             //read the input steream and store it as string

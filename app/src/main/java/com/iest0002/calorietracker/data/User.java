@@ -1,11 +1,15 @@
-package com.iest0002.calorietracker.entities;
+package com.iest0002.calorietracker.data;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity
 public class User {
-
+    @PrimaryKey
     private int userId;
     private String fname;
     private String lname;
@@ -19,7 +23,7 @@ public class User {
     private int levelOfActivity;
     private int stepsPerMile;
 
-    public User(int userId, String fname, String lname, String email, String dob, double height,
+    public User(int userId, String fname, String lname, String email, Date dob, double height,
                 double weight, char gender, String address, String postcode, int levelOfActivity, int stepsPerMile) {
         this.userId = userId;
         this.fname = fname;
@@ -32,13 +36,7 @@ public class User {
         this.postcode = postcode;
         this.levelOfActivity = levelOfActivity;
         this.stepsPerMile = stepsPerMile;
-
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            this.dob = format.parse(dob);
-        } catch (ParseException e) {
-            this.dob = new Date();
-        }
+        this.dob = dob;
     }
 
     public User(String fname, String lname, String email, String dob,

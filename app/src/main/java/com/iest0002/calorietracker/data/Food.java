@@ -1,4 +1,4 @@
-package com.iest0002.calorietracker.entities;
+package com.iest0002.calorietracker.data;
 
 public class Food {
 
