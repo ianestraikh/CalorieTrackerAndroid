@@ -23,7 +23,7 @@ public class RestClient {
     /**
      * ref: FIT5046 Week7 tutorial
      */
-    public static String post(Object object, String methodPath) {
+    public static String post(String methodPath, Object object) {
         //initialise
         URL url;
         HttpURLConnection conn = null;

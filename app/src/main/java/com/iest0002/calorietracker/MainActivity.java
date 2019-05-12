@@ -22,7 +22,7 @@ import com.iest0002.calorietracker.data.AppDatabase;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    AppDatabase db;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,5 +128,9 @@ public class MainActivity extends AppCompatActivity
             db.userDao().deleteAll();
             return null;
         }
+    }
+
+    public AppDatabase getDb() {
+        return db;
     }
 }

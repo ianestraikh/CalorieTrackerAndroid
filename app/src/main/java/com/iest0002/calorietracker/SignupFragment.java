@@ -29,12 +29,10 @@ import com.iest0002.calorietracker.data.Credential;
 import com.iest0002.calorietracker.data.RestClient;
 import com.iest0002.calorietracker.data.User;
 
-import java.nio.ByteOrder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import at.favre.lib.bytes.BinaryToTextEncoding.Hex;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class SignupFragment extends Fragment {
@@ -159,7 +157,7 @@ public class SignupFragment extends Fragment {
                     Integer.parseInt(params[9]),
                     Integer.parseInt(params[10])
             );
-            String responseMessage = RestClient.post(user, RestClient.CREATE_USER_METHOD_PATH);
+            String responseMessage = RestClient.post(RestClient.CREATE_USER_METHOD_PATH, user);
             User returnedUser;
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ").create();
             if (!TextUtils.isEmpty(responseMessage)) {
@@ -178,7 +176,7 @@ public class SignupFragment extends Fragment {
                     new Date(),
                     returnedUser
             );
-            responseMessage = RestClient.post(cred, RestClient.CREATE_CRED_METHOD_PATH);
+            responseMessage = RestClient.post(RestClient.CREATE_CRED_METHOD_PATH, cred);
             return !TextUtils.isEmpty(responseMessage);
         }
 

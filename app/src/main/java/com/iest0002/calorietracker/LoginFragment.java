@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,7 @@ import com.google.gson.JsonParser;
 import com.iest0002.calorietracker.data.AppDatabase;
 import com.iest0002.calorietracker.data.Credential;
 import com.iest0002.calorietracker.data.RestClient;
-import com.iest0002.calorietracker.data.User;
 
-import java.nio.ByteOrder;
-
-import at.favre.lib.bytes.BinaryToTextEncoding;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class LoginFragment extends Fragment {
@@ -84,14 +79,20 @@ public class LoginFragment extends Fragment {
         @Override
         protected Integer doInBackground(String... params) {
             String response = RestClient.get(RestClient.USERNAME_EXISTS_METHOD_PATH, params[0]);
-            JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
+            JsonObject jsonObject;
+            if (!TextUtils.isEmpty(response)) {
+                jsonObject = new JsonParser().parse(response).getAsJsonObject();
+            } else {
+                return -1;
+            }
             return jsonObject.get("usernameExists").getAsInt();
         }
 
         @Override
-        protected void onPostExecute(Integer response) {
+        protected void onPostExecute(Integer usernameCount) {
+            String alertMessage;
             progressDialog.cancel();
-            if (response == 0) {
+            if (usernameCount == 0) {
                 Fragment signupFragment = new SignupFragment();
                 Bundle cred = new Bundle();
                 cred.putString("username", etUsername.getText().toString());
@@ -102,12 +103,16 @@ public class LoginFragment extends Fragment {
                         .replace(R.id.activity_welcome, signupFragment)
                         .addToBackStack(null)
                         .commit();
-            } else if (response != 0) {
-                new AlertDialog.Builder(getContext())
-                        .setMessage("This username isn't available")
-                        .setNegativeButton(android.R.string.no, null)
-                        .show();
+                return;
+            } else if (usernameCount >0) {
+                alertMessage = "This username isn't available";
+            } else {
+                alertMessage = "Try again";
             }
+            new AlertDialog.Builder(getContext())
+                    .setMessage(alertMessage)
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
         }
     }
 
@@ -123,7 +128,6 @@ public class LoginFragment extends Fragment {
             Credential cred;
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ").create();
             if (!TextUtils.isEmpty(response)) {
-                Log.i(LoginFragment.class.getName(), response);
                 cred = gson.fromJson(response, Credential.class);
             } else {
                 return false;
