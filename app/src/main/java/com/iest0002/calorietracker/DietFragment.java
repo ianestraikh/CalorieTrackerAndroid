@@ -193,6 +193,7 @@ public class DietFragment extends Fragment {
                 String imgUrl = googleSearchResult.getItems().get(0).getPagemap().getCseImage().get(0).getSrc();
 
                 tvFoodDesc.setText(snippet);
+
                 Glide.with(getContext())
                         .load(imgUrl)
                         .into(ivFood);
