@@ -181,9 +181,9 @@ public class SignupFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Boolean response) {
+        protected void onPostExecute(Boolean isUserCreated) {
             progressDialog.cancel();
-            if (response) {
+            if (isUserCreated) {
                 new AlertDialog.Builder(getContext())
                         .setMessage("Your account has been created!")
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

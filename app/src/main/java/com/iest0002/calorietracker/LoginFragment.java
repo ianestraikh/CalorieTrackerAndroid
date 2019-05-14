@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(String... params) {
-            String response = RestClient.get(RestClient.USERNAME_EXISTS_METHOD_PATH, params[0]);
+            String response = RestClient.myDbGet(RestClient.USERNAME_EXISTS_METHOD_PATH, params[0]);
             JsonObject jsonObject;
             if (!TextUtils.isEmpty(response)) {
                 jsonObject = new JsonParser().parse(response).getAsJsonObject();
@@ -124,7 +124,7 @@ public class LoginFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... params) {
-            String response = RestClient.get(RestClient.FIND_CRED_BY_USERNAME, params[0]);
+            String response = RestClient.myDbGet(RestClient.FIND_CRED_BY_USERNAME, params[0]);
             Credential cred;
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ").create();
             if (!TextUtils.isEmpty(response)) {

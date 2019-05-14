@@ -30,6 +30,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.3'
 
     implementation 'at.favre.lib:bcrypt:0.8.0'
+
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    // Working with images
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }

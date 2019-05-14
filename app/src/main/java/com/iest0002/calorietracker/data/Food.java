@@ -22,6 +22,16 @@ public class Food {
         this.fat = fat;
     }
 
+    public Food(String foodName, String foodCategory, double calorieAmount,
+                String servingUnit, double servingAmount, double fat) {
+        this.foodName = foodName;
+        this.foodCategory = foodCategory;
+        this.calorieAmount = calorieAmount;
+        this.servingUnit = servingUnit;
+        this.servingAmount = servingAmount;
+        this.fat = fat;
+    }
+
     public Integer getFoodId() {
         return foodId;
     }
@@ -76,5 +86,10 @@ public class Food {
 
     public void setFat(double fat) {
         this.fat = fat;
+    }
+
+    @Override
+    public String toString() {
+        return this.foodName;
     }
 }

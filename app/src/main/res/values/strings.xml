@@ -40,4 +40,14 @@
     <string name="food_category">Category</string>
     <string name="food">Food</string>
     <string name="logout">Logout</string>
+    <string name="hello_user">Hello, %1$s</string>
+    <string name="diet_cal">CAL:</string>
+    <string name="diet_fat">FAT:</string>
+    <string name="diet_unit">UNIT:</string>
+    <string name="diet_serv">SERV:</string>
+    <string name="food_desc_sample">A muffin is an individual-sized, baked product. It can refer to two distinct items, a part-raised flatbread and a cupcake-like quickbread.</string>
+    <string name="enter_food_name">Enter food name</string>
+    <string name="btn_add_food">ADD</string>
+    <string name="add_food_dialog_title">Add New Food</string>
+    <string name="alphabetical_digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
 </resources>

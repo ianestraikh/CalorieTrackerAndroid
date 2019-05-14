@@ -11,3 +11,6 @@
 /build
 /captures
 .externalNativeBuild
+
+# Ignore the file with API keys
+/app/src/main/java/com/iest0002/calorietracker/data/Constants.java

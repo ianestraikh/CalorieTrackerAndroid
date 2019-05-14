@@ -7,32 +7,41 @@ import com.google.gson.GsonBuilder;
 
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Scanner;
 
 public class RestClient {
 
     public static final String TAG = RestClient.class.getName();
-    public static final String BASE_URL = "http://118.138.65.130:8080/CalorieTrackerBackend/webresources/";
 
+    public static final String MY_DB_URL = String.format("http://%s/CalorieTrackerBackend/webresources/", Constants.MY_DB_ADDRESS);
     public static final String CREATE_USER_METHOD_PATH = "entities.usr/";
     public static final String CREATE_CRED_METHOD_PATH = "entities.credential/";
+    public static final String CREATE_FOOD_METHOD_PATH = "entities.food/";
     public static final String USERNAME_EXISTS_METHOD_PATH = "entities.credential/usernameExists/";
     public static final String FIND_CRED_BY_USERNAME = "entities.credential/findByUsername/";
+    public static final String GET_FOOD_CATEGORIES = "entities.food/getFoodCategories/";
+    public static final String FIND_FOOD_BY_CATEGORY = "entities.food/findByFoodCategory/";
+
+    public static final String NDB_FOOD = String.format("https://api.nal.usda.gov/ndb/V2/reports?ndbno=%%s&type=b&format=json&api_key=%s", Constants.NDB_KEY);
+    public static final String NDB_FOOD_ID = String.format("https://api.nal.usda.gov/ndb/search/?format=json&q=%%s&sort=n&max=25&offset=0&api_key=%s&ds=Standard+Reference", Constants.NDB_KEY);
+
+    public static final String GOOGLE_SEARCH = String.format("https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=%%s", Constants.GOOGLE_SEARCH_KEY, Constants.GOOGLE_SEARCH_CX);
 
     /**
      * ref: FIT5046 Week7 tutorial
      */
     public static String post(String methodPath, Object object) {
         //initialise
-        URL url;
         HttpURLConnection conn = null;
         StringBuffer result = new StringBuffer();
         try {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ").create();
             String stringCourseJson = gson.toJson(object);
 
-            url = new URL(BASE_URL + methodPath);
+            URL url = new URL(MY_DB_URL + methodPath);
             //open the connection
             conn = (HttpURLConnection) url.openConnection();
             //set the timeout
@@ -60,27 +69,44 @@ public class RestClient {
             }
             Log.i(TAG, result.toString());
         } catch (Exception e) {
-            Log.e(TAG, "Exception occurred while posting " + Object.class.getName(), e);
+            Log.e(TAG, "Exception occurred while executing POST of " + Object.class.getName(), e);
         } finally {
             conn.disconnect();
         }
         return result.toString();
     }
 
-    public static String get(String methodPath, String... params) {
-        URL url;
-        HttpURLConnection conn = null;
+    public static String myDbGet(String methodPath, String... params) {
         if (params != null) {
             StringBuffer sb = new StringBuffer(methodPath);
             for (String param: params) {
+                param = URLEncoder.encode(param);
+                param = param.replace("+", "%20");
                 sb.append(param);
                 sb.append("/");
             }
             methodPath = sb.toString();
         }
+        return get(MY_DB_URL + methodPath);
+    }
+
+    public static String ndbGet(String methodPath, String param) {
+        param = URLEncoder.encode(param);
+        String spec = String.format(methodPath, param);
+        return get(spec);
+    }
+
+    public static String googleSearchGet(String query) {
+        query = URLEncoder.encode(query);
+        String spec = String.format(GOOGLE_SEARCH, query);
+        return get(spec);
+    }
+
+    private static String get(String spec) {
+        HttpURLConnection conn = null;
         StringBuffer result = new StringBuffer();
         try {
-            url = new URL(BASE_URL + methodPath);
+            URL url = new URL(spec);
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
@@ -94,7 +120,7 @@ public class RestClient {
                 result.append(inStream.nextLine());
             }
         } catch (Exception e) {
-            Log.e(TAG, "Exception occurred while checking if username exists", e);
+            Log.e(TAG, "Exception occurred while executing GET", e);
         } finally {
             conn.disconnect();
         }

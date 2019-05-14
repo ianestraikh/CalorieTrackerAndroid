@@ -19,6 +19,15 @@ public interface UserDao {
     @Query("SELECT COUNT() from user")
     int count();
 
+    @Query("SELECT fname from user")
+    List<String> getFirstName();
+
+    @Query("SELECT lname from user")
+    List<String> getLastName();
+
+    @Query("SELECT email from user")
+    List<String> getEmail();
+
     @Insert
     void insertAll(User... users);
 

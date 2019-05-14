@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.iest0002.calorietracker.data.AppDatabase;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppDatabase db;
+    private TextView tvNavHeaderTitle;
+    private TextView tvNavHeaderSubtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,13 @@ public class MainActivity extends AppCompatActivity
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
                 .fallbackToDestructiveMigration()
                 .build();
+
+        View headerView =  navigationView.getHeaderView(0);
+
+        tvNavHeaderTitle = headerView.findViewById(R.id.tv_nav_header_title);
+        tvNavHeaderSubtitle = headerView.findViewById(R.id.tv_nav_header_subtitle);
+        SetNavTitleAsyncTask setNavTitle = new SetNavTitleAsyncTask();
+        setNavTitle.execute();
     }
 
     @Override
@@ -121,6 +132,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public AppDatabase getDb() {
+        return db;
+    }
+
     private class DeleteUserAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -130,7 +145,21 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public AppDatabase getDb() {
-        return db;
+    private class SetNavTitleAsyncTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... voids) {
+            String fname = db.userDao().getFirstName().get(0);
+            String lname = db.userDao().getLastName().get(0);
+            String fullName = String.format("%s %s", fname, lname);
+            String email = db.userDao().getEmail().get(0);
+            return new String[]{fullName, email};
+        }
+
+        @Override
+        protected void onPostExecute(String... s) {
+            tvNavHeaderTitle.setText(s[0]);
+            tvNavHeaderSubtitle.setText(s[1]);
+        }
     }
 }
