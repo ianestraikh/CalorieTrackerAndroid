@@ -186,6 +186,7 @@ public class SignupFragment extends Fragment {
             if (isUserCreated) {
                 new AlertDialog.Builder(getContext())
                         .setMessage("Your account has been created!")
+                        .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 getFragmentManager().popBackStack();

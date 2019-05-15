@@ -2,13 +2,16 @@ package com.iest0002.calorietracker;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,8 +137,20 @@ public class DietFragment extends Fragment {
                 spnCategory.setAdapter(categoryAdapter);
             } else {
                 new AlertDialog.Builder(getContext())
+                        .setCancelable(false)
                         .setMessage("Check your internet connection")
-                        .setNegativeButton(android.R.string.no, null)
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Fragment homeFragment = new HomeFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.content_frame, homeFragment)
+                                        .addToBackStack(null)
+                                        .commit();
+                                ((NavigationView) getActivity().findViewById(R.id.nav_view))
+                                        .setCheckedItem(R.id.nav_home);
+                            }
+                        })
                         .show();
             }
         }
@@ -165,6 +180,7 @@ public class DietFragment extends Fragment {
             } else {
                 new AlertDialog.Builder(getContext())
                         .setMessage("Check your internet connection")
+                        .setCancelable(false)
                         .setNegativeButton(android.R.string.no, null)
                         .show();
             }
@@ -189,18 +205,33 @@ public class DietFragment extends Fragment {
                         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                         .create();
                 GoogleSearchResult googleSearchResult = gson.fromJson(response, GoogleSearchResult.class);
-                String snippet = googleSearchResult.getItems().get(0).getSnippet();
-                String imgUrl = googleSearchResult.getItems().get(0).getPagemap().getCseImage().get(0).getSrc();
 
-                tvFoodDesc.setText(snippet);
+                String snippet = null;
+                String imgUrl = null;
+                try {
+                    snippet = googleSearchResult.getItems().get(0).getSnippet();
+                    imgUrl = googleSearchResult.getItems().get(0).getPagemap().getCseImage().get(0).getSrc();
+                } catch (Exception e) {
+                    Log.e(this.getClass().getName(), "Exception occurred while parsing google search result: " + e.getMessage());
+                }
 
-                Glide.with(getContext())
-                        .load(imgUrl)
-                        .into(ivFood);
-                flFoodDesc.setVisibility(View.VISIBLE);
+                if (snippet != null && imgUrl != null) {
+                    Glide.with(getContext())
+                            .load(imgUrl)
+                            .into(ivFood);
+                    snippet = snippet.replace("\r\n", " ").replace("\n", " ");
+                    if (snippet.contains("."))
+                        snippet = snippet.split("\\.")[0];
+                    tvFoodDesc.setText(snippet);
+                    flFoodDesc.setVisibility(View.VISIBLE);
+                } else {
+                    ivFood.setImageResource(R.drawable.img_noimage);
+                    flFoodDesc.setVisibility(View.INVISIBLE);
+                }
             } else {
                 new AlertDialog.Builder(getContext())
                         .setMessage("Check your internet connection")
+                        .setCancelable(false)
                         .setNegativeButton(android.R.string.no, null)
                         .show();
             }

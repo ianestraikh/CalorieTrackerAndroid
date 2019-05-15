@@ -174,6 +174,7 @@ public class AddFoodDialogFragment extends DialogFragment {
             if (isSuccessful) {
                 new AlertDialog.Builder(getContext())
                         .setMessage("The food has been added")
+                        .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dismiss();
@@ -182,6 +183,7 @@ public class AddFoodDialogFragment extends DialogFragment {
             } else {
                 new AlertDialog.Builder(getContext())
                         .setMessage("Something went wrong")
+                        .setCancelable(false)
                         .setNegativeButton(android.R.string.no, null)
                         .show();
             }
