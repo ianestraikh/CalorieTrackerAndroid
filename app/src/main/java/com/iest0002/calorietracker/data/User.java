@@ -23,8 +23,6 @@ public class User {
     private int levelOfActivity;
     private int stepsPerMile;
 
-    private double calorieGoal;
-
     public User(int userId, String fname, String lname, String email, Date dob, double height,
                 double weight, char gender, String address, String postcode, int levelOfActivity, int stepsPerMile) {
         this.userId = userId;
@@ -62,31 +60,6 @@ public class User {
             this.dob = new Date();
         }
 
-    }
-
-    public User(int userId, String fname, String lname, String email, Date dob, double height,
-                double weight, char gender, String address, String postcode, int levelOfActivity, int stepsPerMile, double calorieGoal) {
-        this.userId = userId;
-        this.fname = fname;
-        this.lname = lname;
-        this.email = email;
-        this.dob = dob;
-        this.height = height;
-        this.weight = weight;
-        this.gender = gender;
-        this.address = address;
-        this.postcode = postcode;
-        this.levelOfActivity = levelOfActivity;
-        this.stepsPerMile = stepsPerMile;
-        this.calorieGoal = calorieGoal;
-    }
-
-    public double getCalorieGoal() {
-        return calorieGoal;
-    }
-
-    public void setCalorieGoal(double calorieGoal) {
-        this.calorieGoal = calorieGoal;
     }
 
     public int getUserId() {
