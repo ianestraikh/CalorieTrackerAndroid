@@ -1,4 +1,4 @@
-package com.iest0002.calorietracker;
+package com.iest0002.calorietracker.fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,12 +8,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.iest0002.calorietracker.MainActivity;
+import com.iest0002.calorietracker.R;
 
 public class HomeFragment extends Fragment {
     SharedPreferences sharedPrefCalGoal;
@@ -50,6 +54,7 @@ public class HomeFragment extends Fragment {
     public void showEditGoalDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Edit Daily Goal");
+        builder.setCancelable(false);
 
         // Set up the input
         final EditText input = new EditText(getActivity());
@@ -63,11 +68,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String inputNumber = input.getText().toString();
+                if (TextUtils.isEmpty(inputNumber)) {
+                    return;
+                }
                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(getString(R.string.saved_calorie_goal_key), Integer.parseInt(inputNumber));
                 tvCalGoal.setText(inputNumber);
-                editor.commit();
+                editor.apply();
+                dialog.cancel();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

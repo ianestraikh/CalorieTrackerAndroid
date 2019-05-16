@@ -1,4 +1,4 @@
-package com.iest0002.calorietracker;
+package com.iest0002.calorietracker.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -30,6 +30,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.iest0002.calorietracker.R;
 import com.iest0002.calorietracker.data.Food;
 import com.iest0002.calorietracker.data.GoogleSearchResult;
 import com.iest0002.calorietracker.data.RestClient;
@@ -109,6 +110,14 @@ public class DietFragment extends Fragment {
         return vDiet;
     }
 
+    /*
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetCategoriesAsyncTask getCategoriesAsyncTask = new GetCategoriesAsyncTask();
+        getCategoriesAsyncTask.execute();
+    }*/
+
     private class GetCategoriesAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -144,7 +153,6 @@ public class DietFragment extends Fragment {
                                 Fragment homeFragment = new HomeFragment();
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.content_frame, homeFragment)
-                                        .addToBackStack(null)
                                         .commit();
                                 ((NavigationView) getActivity().findViewById(R.id.nav_view))
                                         .setCheckedItem(R.id.nav_home);
@@ -219,8 +227,10 @@ public class DietFragment extends Fragment {
                             .load(imgUrl)
                             .into(ivFood);
                     snippet = snippet.replace("\r\n", " ").replace("\n", " ");
+                    snippet = snippet.replace(",", "");
                     if (snippet.contains("."))
                         snippet = snippet.split("\\.")[0];
+                    snippet += ".";
                     tvFoodDesc.setText(snippet);
                     flFoodDesc.setVisibility(View.VISIBLE);
                 } else {

@@ -1,4 +1,4 @@
-package com.iest0002.calorietracker;
+package com.iest0002.calorietracker.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.iest0002.calorietracker.R;
 import com.iest0002.calorietracker.data.Food;
 import com.iest0002.calorietracker.data.NdbFood;
 import com.iest0002.calorietracker.data.RestClient;

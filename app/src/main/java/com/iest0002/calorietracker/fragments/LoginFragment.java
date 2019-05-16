@@ -1,4 +1,4 @@
-package com.iest0002.calorietracker;
+package com.iest0002.calorietracker.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,6 +18,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.iest0002.calorietracker.MainActivity;
+import com.iest0002.calorietracker.R;
+import com.iest0002.calorietracker.WelcomeActivity;
 import com.iest0002.calorietracker.data.AppDatabase;
 import com.iest0002.calorietracker.data.Credential;
 import com.iest0002.calorietracker.data.RestClient;

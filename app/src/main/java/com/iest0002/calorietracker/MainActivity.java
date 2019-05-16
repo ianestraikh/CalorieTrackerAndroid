@@ -20,6 +20,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.iest0002.calorietracker.data.AppDatabase;
+import com.iest0002.calorietracker.fragments.DietFragment;
+import com.iest0002.calorietracker.fragments.HomeFragment;
+import com.iest0002.calorietracker.fragments.MapFragment;
+import com.iest0002.calorietracker.fragments.ReportFragment;
+import com.iest0002.calorietracker.fragments.StepsFragment;
+import com.iest0002.calorietracker.fragments.TrackerFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

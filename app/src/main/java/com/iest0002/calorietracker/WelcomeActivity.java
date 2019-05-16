@@ -1,6 +1,5 @@
 package com.iest0002.calorietracker;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.iest0002.calorietracker.data.AppDatabase;
+import com.iest0002.calorietracker.fragments.LoginFragment;
 
 public class WelcomeActivity extends AppCompatActivity {
 

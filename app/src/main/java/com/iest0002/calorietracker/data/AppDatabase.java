@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Steps.class}, version = 3, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -16,7 +16,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "customer_database").build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "app_database").build();
                 }
             }
         }
@@ -24,5 +24,6 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract UserDao userDao();
+    public abstract StepsDao stepsDao();
 
 }
