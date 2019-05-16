@@ -3,6 +3,7 @@ package com.iest0002.calorietracker.views;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class StepsAdapter extends ArrayAdapter<Steps> {
                 int position = (Integer) btnEdit.getTag();
                 Steps steps = getItem(position);
                 showEditSteps(steps);
+                v.invalidate();
             }
         });
         Button btnDelete = convertView.findViewById(R.id.btn_delete_steps);
@@ -74,6 +76,9 @@ public class StepsAdapter extends ArrayAdapter<Steps> {
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setText(Integer.toString(steps.getStepsAmount()));
+        input.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(5)
+        });
         builder.setView(input);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

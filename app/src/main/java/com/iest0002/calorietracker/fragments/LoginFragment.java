@@ -114,6 +114,7 @@ public class LoginFragment extends Fragment {
             }
             new AlertDialog.Builder(getContext())
                     .setMessage(alertMessage)
+                    .setCancelable(false)
                     .setNegativeButton(android.R.string.no, null)
                     .show();
         }

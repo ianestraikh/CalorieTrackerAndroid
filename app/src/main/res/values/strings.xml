@@ -54,4 +54,8 @@
     <string name="btn_add">ADD</string>
     <string name="btn_edit">EDIT</string>
     <string name="btn_delete">DELETE</string>
+    <string name="tracker_goal">Goal</string>
+    <string name="tracker_steps">Steps Taken</string>
+    <string name="tracker_cal_consumed">Calories Consumed</string>
+    <string name="tracker_cal_burned">Calories Burned</string>
 </resources>

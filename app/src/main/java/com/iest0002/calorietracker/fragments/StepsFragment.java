@@ -1,16 +1,19 @@
 package com.iest0002.calorietracker.fragments;
 
 import android.app.AlertDialog;
+import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -41,6 +44,10 @@ public class StepsFragment extends Fragment {
         vSteps = inflater.inflate(R.layout.fragment_steps, container, false);
         listView = vSteps.findViewById(R.id.lv_steps);
 
+        db = Room.databaseBuilder(getContext(), AppDatabase.class, "AppDatabase")
+                .fallbackToDestructiveMigration()
+                .build();
+
         GetStepsAsyncTask getSteps = new GetStepsAsyncTask();
         getSteps.execute();
 
@@ -52,17 +59,16 @@ public class StepsFragment extends Fragment {
             }
         });
 
-        db = ((MainActivity) getActivity()).getDb();
-
         return vSteps;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        SaveStepsListToDbAsyncTask saveStepsListToDb = new SaveStepsListToDbAsyncTask();
-        saveStepsListToDb.execute();
+        InsertAllStepsAsyncTask insertAllSteps = new InsertAllStepsAsyncTask();
+        insertAllSteps.execute();
     }
+
 
     // ref: https://stackoverflow.com/questions/10903754/input-text-dialog-android
     public void showAddSteps() {
@@ -72,6 +78,9 @@ public class StepsFragment extends Fragment {
 
         final EditText input = new EditText(getActivity());
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(5)
+        });
         builder.setView(input);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -79,7 +88,12 @@ public class StepsFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 if (TextUtils.isEmpty(input.getText()))
                     return;
-                Steps steps = new Steps(Integer.parseInt(input.getText().toString()), new Date());
+                int stepsAmount = Integer.parseInt(input.getText().toString());
+                Steps steps = new Steps(stepsAmount, new Date());
+                /*
+                InsertStepsAsyncTask insertSteps = new InsertStepsAsyncTask();
+                insertSteps.execute(steps);
+                */
                 list.add(steps);
                 stepsAdapter.notifyDataSetChanged();
             }
@@ -98,6 +112,7 @@ public class StepsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Steps> stepsList) {
+            list = (ArrayList) stepsList;
             stepsAdapter = new StepsAdapter(getContext(), stepsList);
             listView.setAdapter(stepsAdapter);
         }
@@ -108,7 +123,7 @@ public class StepsFragment extends Fragment {
         }
     }
 
-    private class SaveStepsListToDbAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class InsertAllStepsAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... v) {
             db.stepsDao().deleteAll();
@@ -121,5 +136,12 @@ public class StepsFragment extends Fragment {
         }
     }
 
+    private class InsertStepsAsyncTask extends AsyncTask<Steps, Void, Void> {
+        @Override
+        protected Void doInBackground(Steps... s) {
+            db.stepsDao().insert(s[0]);
+            return null;
+        }
+    }
 
 }

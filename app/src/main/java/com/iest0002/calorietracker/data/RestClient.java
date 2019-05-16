@@ -24,6 +24,7 @@ public class RestClient {
     public static final String FIND_CRED_BY_USERNAME = "entities.credential/findByUsername/";
     public static final String GET_FOOD_CATEGORIES = "entities.food/getFoodCategories/";
     public static final String FIND_FOOD_BY_CATEGORY = "entities.food/findByFoodCategory/";
+    public static final String CALC_CAL_CONSUMED = "entities.consumption/calculateTotalCaloriesConsumed/";
 
     public static final String NDB_FOOD = String.format("https://api.nal.usda.gov/ndb/V2/reports?ndbno=%%s&type=b&format=json&api_key=%s", Constants.NDB_KEY);
     public static final String NDB_FOOD_ID = String.format("https://api.nal.usda.gov/ndb/search/?format=json&q=%%s&sort=n&max=25&offset=0&api_key=%s&ds=Standard+Reference", Constants.NDB_KEY);

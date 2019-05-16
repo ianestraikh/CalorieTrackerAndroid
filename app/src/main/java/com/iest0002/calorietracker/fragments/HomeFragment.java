@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -61,6 +62,9 @@ public class HomeFragment extends Fragment {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setHint("kcal");
+        input.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(5)
+        });
         builder.setView(input);
 
         // Set up the buttons
