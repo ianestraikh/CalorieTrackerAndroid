@@ -4,25 +4,24 @@ import java.util.Date;
 
 public class Consumption {
 
-    private int consumId;
+    private Integer consumId;
     private Date consumptionDate;
     private int quantity;
-    private int foodId;
-    private int userId;
+    private Food foodId;
+    private User userId;
 
-    public Consumption(int consumId, Date consumptionDate, int quantity, int foodId, int userId) {
-        this.consumId = consumId;
+    public Consumption(Date consumptionDate, int quantity, Food foodId, User userId) {
         this.consumptionDate = consumptionDate;
         this.quantity = quantity;
         this.foodId = foodId;
         this.userId = userId;
     }
 
-    public int getConsumId() {
+    public Integer getConsumId() {
         return consumId;
     }
 
-    public void setConsumId(int consumId) {
+    public void setConsumId(Integer consumId) {
         this.consumId = consumId;
     }
 
@@ -42,19 +41,19 @@ public class Consumption {
         this.quantity = quantity;
     }
 
-    public int getFoodId() {
+    public Food getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(int foodId) {
+    public void setFoodId(Food foodId) {
         this.foodId = foodId;
     }
 
-    public int getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 }

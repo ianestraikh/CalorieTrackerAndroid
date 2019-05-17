@@ -25,7 +25,7 @@ public interface StepsDao {
     List<Integer> getStepsAmount();
 
     @Query("UPDATE steps SET stepsAmount = :stepsAmount WHERE id = :id")
-    void getLastName(int stepsAmount, int id);
+    void update(int stepsAmount, int id);
 
     @Query("SELECT SUM(stepsAmount) from steps")
     int sumStepsAmount();

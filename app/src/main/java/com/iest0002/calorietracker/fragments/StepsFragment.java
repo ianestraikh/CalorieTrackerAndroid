@@ -44,6 +44,14 @@ public class StepsFragment extends Fragment {
         vSteps = inflater.inflate(R.layout.fragment_steps, container, false);
         listView = vSteps.findViewById(R.id.lv_steps);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Steps steps = (Steps) parent.getItemAtPosition(position);
+                showEditSteps(steps, position);
+            }
+        });
+
         db = Room.databaseBuilder(getContext(), AppDatabase.class, "AppDatabase")
                 .fallbackToDestructiveMigration()
                 .build();
@@ -62,21 +70,13 @@ public class StepsFragment extends Fragment {
         return vSteps;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        InsertAllStepsAsyncTask insertAllSteps = new InsertAllStepsAsyncTask();
-        insertAllSteps.execute();
-    }
-
-
     // ref: https://stackoverflow.com/questions/10903754/input-text-dialog-android
     public void showAddSteps() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add Steps");
         builder.setCancelable(false);
 
-        final EditText input = new EditText(getActivity());
+        final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setFilters(new InputFilter[] {
                 new InputFilter.LengthFilter(5)
@@ -90,12 +90,48 @@ public class StepsFragment extends Fragment {
                     return;
                 int stepsAmount = Integer.parseInt(input.getText().toString());
                 Steps steps = new Steps(stepsAmount, new Date());
-                /*
+
                 InsertStepsAsyncTask insertSteps = new InsertStepsAsyncTask();
                 insertSteps.execute(steps);
-                */
+
                 list.add(steps);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    public void showEditSteps(final Steps steps, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Edit steps");
+        builder.setCancelable(false);
+
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setText(Integer.toString(steps.getStepsAmount()));
+        input.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(5)
+        });
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (TextUtils.isEmpty(input.getText()))
+                    return;
+                // without passing new object to list ListView doesn't refresh view
+                int newStepsAmount = Integer.parseInt(input.getText().toString());
+                list.set(position, new Steps(newStepsAmount, steps.getDate()));
                 stepsAdapter.notifyDataSetChanged();
+
+                UpdateStepsAsyncTask updateSteps = new UpdateStepsAsyncTask();
+                updateSteps.execute(newStepsAmount, steps.getId());
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -111,15 +147,15 @@ public class StepsFragment extends Fragment {
     private class GetStepsAsyncTask extends AsyncTask<Void, Void, List<Steps>> {
 
         @Override
+        protected List<Steps> doInBackground(Void... voids) {
+            return db.stepsDao().getAll();
+        }
+
+        @Override
         protected void onPostExecute(List<Steps> stepsList) {
             list = (ArrayList) stepsList;
             stepsAdapter = new StepsAdapter(getContext(), stepsList);
             listView.setAdapter(stepsAdapter);
-        }
-
-        @Override
-        protected List<Steps> doInBackground(Void... voids) {
-            return db.stepsDao().getAll();
         }
     }
 
@@ -143,5 +179,14 @@ public class StepsFragment extends Fragment {
             return null;
         }
     }
+
+    private class UpdateStepsAsyncTask extends AsyncTask<Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... ints) {
+            db.stepsDao().update(ints[0], ints[1]);
+            return null;
+        }
+    }
+
 
 }

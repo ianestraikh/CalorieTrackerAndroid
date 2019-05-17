@@ -2,7 +2,9 @@ package com.iest0002.calorietracker.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,10 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.FieldNamingPolicy;
@@ -31,26 +35,26 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.iest0002.calorietracker.R;
+import com.iest0002.calorietracker.data.Consumption;
 import com.iest0002.calorietracker.data.Food;
 import com.iest0002.calorietracker.data.GoogleSearchResult;
 import com.iest0002.calorietracker.data.RestClient;
+import com.iest0002.calorietracker.data.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DietFragment extends Fragment {
     private ProgressDialog progressDialog;
-    private View vDiet;
     private Spinner spnCategory, spnFood;
     private ImageView ivFood;
 
     private TextView tvCalAmount, tvFat, tvServUnit, tvServ, tvFoodDesc;
     private FrameLayout flFoodDesc;
 
-    private FloatingActionButton fabDiet;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        vDiet = inflater.inflate(R.layout.fragment_diet, container, false);
+        View vDiet = inflater.inflate(R.layout.fragment_diet, container, false);
 
         tvCalAmount = vDiet.findViewById(R.id.tv_cal_amount);
         tvFat = vDiet.findViewById(R.id.tv_fat);
@@ -60,6 +64,15 @@ public class DietFragment extends Fragment {
         flFoodDesc = vDiet.findViewById(R.id.fl_food_desc);
 
         ivFood = vDiet.findViewById(R.id.iv_food);
+
+        Button btnConsumed = vDiet.findViewById(R.id.btn_food_consumed);
+        btnConsumed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostConsumedFoodAsyncTask postConsumedFood = new PostConsumedFoodAsyncTask();
+                postConsumedFood.execute();
+            }
+        });
 
         spnCategory = vDiet.findViewById(R.id.spn_food_category);
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -95,7 +108,7 @@ public class DietFragment extends Fragment {
             }
         });
 
-        fabDiet = vDiet.findViewById(R.id.fab_diet);
+        FloatingActionButton fabDiet = vDiet.findViewById(R.id.fab_diet);
         fabDiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,6 +255,38 @@ public class DietFragment extends Fragment {
                         .setMessage("Check your internet connection")
                         .setCancelable(false)
                         .setNegativeButton(android.R.string.no, null)
+                        .show();
+            }
+        }
+    }
+
+    private class PostConsumedFoodAsyncTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+            );
+            int userIdDefault = getResources().getInteger(R.integer.saved_default_user_id);
+            int userId = sharedPref.getInt(getResources().getString(R.string.saved_user_id_key), userIdDefault);
+            Food food = (Food) spnFood.getSelectedItem();
+
+            String userJson = RestClient.myDbGet(RestClient.USER_METHOD_PATH, Integer.toString(userId));
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ").create();
+            User user = gson.fromJson(userJson, User.class);
+
+            Consumption cons = new Consumption(new Date(), 1, food, user);
+            return RestClient.post(RestClient.CONSUMPTION_METHOD_PATH, cons);
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            if (!TextUtils.isEmpty(response)) {
+                Toast.makeText(getContext(), "Food has been added to Consumption table", Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT)
                         .show();
             }
         }

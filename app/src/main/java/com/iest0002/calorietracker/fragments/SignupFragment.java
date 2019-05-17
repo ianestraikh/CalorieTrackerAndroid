@@ -159,7 +159,7 @@ public class SignupFragment extends Fragment {
                     Integer.parseInt(params[9]),
                     Integer.parseInt(params[10])
             );
-            String responseMessage = RestClient.post(RestClient.CREATE_USER_METHOD_PATH, user);
+            String responseMessage = RestClient.post(RestClient.USER_METHOD_PATH, user);
             User returnedUser;
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ").create();
             if (!TextUtils.isEmpty(responseMessage)) {
@@ -178,7 +178,7 @@ public class SignupFragment extends Fragment {
                     new Date(),
                     returnedUser
             );
-            responseMessage = RestClient.post(RestClient.CREATE_CRED_METHOD_PATH, cred);
+            responseMessage = RestClient.post(RestClient.CRED_METHOD_PATH, cred);
             return !TextUtils.isEmpty(responseMessage);
         }
 

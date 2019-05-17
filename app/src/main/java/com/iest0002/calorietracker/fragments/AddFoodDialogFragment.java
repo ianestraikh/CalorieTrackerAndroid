@@ -168,7 +168,7 @@ public class AddFoodDialogFragment extends DialogFragment {
                         energy.getMeasures().get(0).getQty(),
                         fat.getMeasures().get(0).getValue()
                 );
-                String postResponse = RestClient.post(RestClient.CREATE_FOOD_METHOD_PATH, food);
+                String postResponse = RestClient.post(RestClient.FOOD_METHOD_PATH, food);
                 return !TextUtils.isEmpty(postResponse);
             } else {
                 return false;

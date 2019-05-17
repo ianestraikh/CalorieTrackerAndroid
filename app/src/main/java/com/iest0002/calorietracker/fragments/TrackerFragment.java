@@ -38,19 +38,22 @@ public class TrackerFragment extends Fragment {
         tvCalConsumed = vTracker.findViewById(R.id.tv_tracker_consumed);
         tvCalBurned = vTracker.findViewById(R.id.tv_tracker_burned);
 
-        SharedPreferences sharedPrefCalGoal = getActivity().getSharedPreferences(
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(
                 getString(R.string.preference_file_key),
                 Context.MODE_PRIVATE
         );
         int calorieGoalDefault = getResources().getInteger(R.integer.saved_default_cal_goal);
-        int calorieGoalKey = sharedPrefCalGoal.getInt(getResources().getString(R.string.saved_cal_goal_key), calorieGoalDefault);
+        int calorieGoalKey = sharedPref.getInt(getResources().getString(R.string.saved_cal_goal_key), calorieGoalDefault);
+        int userIdDefault = getResources().getInteger(R.integer.saved_default_user_id);
+        int userId = sharedPref.getInt(getString(R.string.saved_user_id_key), userIdDefault);
+
         tvGoal.setText(String.valueOf(calorieGoalKey));
 
         GetStepsAsyncTask getSteps = new GetStepsAsyncTask();
         getSteps.execute();
 
         GetCalConsumedAsyncTask getCalConsumed = new GetCalConsumedAsyncTask();
-        getCalConsumed.execute(1);
+        getCalConsumed.execute(userId);
 
         return vTracker;
     }
@@ -76,7 +79,6 @@ public class TrackerFragment extends Fragment {
         protected String doInBackground(Integer... ints) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String date = simpleDateFormat.format(new Date());
-            date = "2019-03-16";
             return RestClient.myDbGet(RestClient.CALC_CAL_CONSUMED, Integer.toString(ints[0]), date);
         }
 

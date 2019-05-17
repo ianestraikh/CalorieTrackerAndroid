@@ -28,6 +28,8 @@ import com.iest0002.calorietracker.fragments.ReportFragment;
 import com.iest0002.calorietracker.fragments.StepsFragment;
 import com.iest0002.calorietracker.fragments.TrackerFragment;
 
+import static java.security.AccessController.getContext;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         */
 
         View headerView = navigationView.getHeaderView(0);
-        //private AppDatabase db;
+
         TextView tvNavHeaderTitle = headerView.findViewById(R.id.tv_nav_header_title);
         TextView tvNavHeaderSubtitle = headerView.findViewById(R.id.tv_nav_header_subtitle);
 
@@ -136,10 +138,10 @@ public class MainActivity extends AppCompatActivity
     private class ClearDbAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            AppDatabase db = Room.databaseBuilder(MainActivity.this, AppDatabase.class, "AppDatabase")
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
                     .fallbackToDestructiveMigration()
                     .build();
-            db.clearAllTables();
+            db.stepsDao().deleteAll();
             return null;
         }
     }

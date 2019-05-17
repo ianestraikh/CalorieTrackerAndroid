@@ -17,9 +17,10 @@ public class RestClient {
     public static final String TAG = RestClient.class.getName();
 
     public static final String MY_DB_URL = String.format("http://%s/CalorieTrackerBackend/webresources/", Constants.MY_DB_ADDRESS);
-    public static final String CREATE_USER_METHOD_PATH = "entities.usr/";
-    public static final String CREATE_CRED_METHOD_PATH = "entities.credential/";
-    public static final String CREATE_FOOD_METHOD_PATH = "entities.food/";
+    public static final String USER_METHOD_PATH = "entities.usr/";
+    public static final String CRED_METHOD_PATH = "entities.credential/";
+    public static final String FOOD_METHOD_PATH = "entities.food/";
+    public static final String CONSUMPTION_METHOD_PATH = "entities.consumption/";
     public static final String USERNAME_EXISTS_METHOD_PATH = "entities.credential/usernameExists/";
     public static final String FIND_CRED_BY_USERNAME = "entities.credential/findByUsername/";
     public static final String GET_FOOD_CATEGORIES = "entities.food/getFoodCategories/";
