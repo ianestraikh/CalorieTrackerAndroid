@@ -37,7 +37,6 @@
 
 
     <ImageView
-        android:id="@+id/img_fitness"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"

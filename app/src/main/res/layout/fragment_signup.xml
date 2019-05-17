@@ -6,7 +6,6 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
-        android:id="@+id/tv_fname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fname" />
@@ -18,7 +17,6 @@
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/tv_lname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lname" />
@@ -30,7 +28,6 @@
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email" />
@@ -42,7 +39,6 @@
         android:inputType="textEmailAddress" />
 
     <TextView
-        android:id="@+id/tv_dob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dob" />
@@ -54,7 +50,6 @@
         android:focusable="false" />
 
     <TextView
-        android:id="@+id/tv_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/height" />
@@ -66,7 +61,6 @@
         android:inputType="numberDecimal"/>
 
     <TextView
-        android:id="@+id/tv_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/weight" />
@@ -78,7 +72,6 @@
         android:inputType="numberDecimal" />
 
     <TextView
-        android:id="@+id/tv_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/gender" />
@@ -94,13 +87,11 @@
             android:layout_alignBottom="@+id/et_dummy"
             android:orientation="horizontal" >
             <RadioButton
-                android:id="@+id/rb_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/female"
                 android:checked="true" />
             <RadioButton
-                android:id="@+id/rb_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/male"/>
@@ -114,7 +105,6 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/address" />
@@ -126,7 +116,6 @@
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/tv_postcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/postcode" />
@@ -139,7 +128,6 @@
         android:maxLength="4" />
 
     <TextView
-        android:id="@+id/tv_steps_per_mile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/steps_per_mile" />
@@ -151,7 +139,6 @@
         android:inputType="number" />
 
     <TextView
-        android:id="@+id/tv_level_of_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/level_of_activity"/>

@@ -1,6 +1,5 @@
 package com.iest0002.calorietracker.fragments;
 
-import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,14 +24,20 @@ import java.util.Date;
 
 public class TrackerFragment extends Fragment {
 
-    View vTracker;
+    private View vTracker;
 
-    TextView tvGoal, tvSteps, tvCalConsumed, tvCalBurned;
+    private TextView tvGoal, tvSteps, tvCalConsumed, tvCalBurned;
+
+    private AppDatabase db;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vTracker = inflater.inflate(R.layout.fragment_tracker, container, false);
+
+        db = Room.databaseBuilder(getContext(), AppDatabase.class, "AppDatabase")
+                .fallbackToDestructiveMigration()
+                .build();
 
         tvGoal = vTracker.findViewById(R.id.tv_tracker_goal);
         tvSteps = vTracker.findViewById(R.id.tv_tracker_steps);
@@ -55,6 +61,9 @@ public class TrackerFragment extends Fragment {
         GetCalConsumedAsyncTask getCalConsumed = new GetCalConsumedAsyncTask();
         getCalConsumed.execute(userId);
 
+        GetCalBurnedAsyncTask getCalBurned = new GetCalBurnedAsyncTask();
+        getCalBurned.execute(userId);
+
         return vTracker;
     }
 
@@ -62,9 +71,6 @@ public class TrackerFragment extends Fragment {
     private class GetStepsAsyncTask extends AsyncTask<Void, Void, Integer> {
         @Override
         protected Integer doInBackground(Void... voids) {
-            AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "AppDatabase")
-                    .fallbackToDestructiveMigration()
-                    .build();
             return db.stepsDao().sumStepsAmount();
         }
 
@@ -89,13 +95,32 @@ public class TrackerFragment extends Fragment {
                 String calConsumed = jsonObject.get("caloriesConsumed").getAsString();
                 tvCalConsumed.setText(calConsumed);
             } else {
-                new AlertDialog.Builder(getContext())
-                        .setMessage("Something went wrong")
-                        .setCancelable(false)
-                        .setNegativeButton(android.R.string.no, null)
+                Toast.makeText(getContext(), R.string.msg_check_connection, Toast.LENGTH_SHORT)
                         .show();
             }
 
+        }
+    }
+
+    private class GetCalBurnedAsyncTask extends AsyncTask<Integer, Void, String> {
+
+        @Override
+        protected String doInBackground(Integer... ints) {
+            int stepsAmount = db.stepsDao().sumStepsAmount();
+            return RestClient.myDbGet(RestClient.CALC_CAL_BURNED, Integer.toString(ints[0]),
+                    Integer.toString(stepsAmount));
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (!TextUtils.isEmpty(s)) {
+                JsonObject jsonObject = new JsonParser().parse(s).getAsJsonObject();
+                String calConsumed = jsonObject.get("caloriesBurned").getAsString();
+                tvCalBurned.setText(calConsumed);
+            } else {
+                Toast.makeText(getContext(), getString(R.string.msg_check_connection), Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
     }
 }

@@ -29,8 +29,6 @@ import java.util.List;
 
 public class StepsFragment extends Fragment {
 
-    private View vSteps;
-
     private ListView listView;
     private StepsAdapter stepsAdapter;
 
@@ -41,7 +39,7 @@ public class StepsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        vSteps = inflater.inflate(R.layout.fragment_steps, container, false);
+        View vSteps = inflater.inflate(R.layout.fragment_steps, container, false);
         listView = vSteps.findViewById(R.id.lv_steps);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

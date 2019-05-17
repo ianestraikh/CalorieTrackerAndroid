@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -24,7 +23,6 @@ import com.google.gson.JsonParser;
 import com.iest0002.calorietracker.MainActivity;
 import com.iest0002.calorietracker.R;
 import com.iest0002.calorietracker.WelcomeActivity;
-import com.iest0002.calorietracker.data.AppDatabase;
 import com.iest0002.calorietracker.data.Credential;
 import com.iest0002.calorietracker.data.RestClient;
 
@@ -85,7 +83,7 @@ public class LoginFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(String... params) {
-            String response = RestClient.myDbGet(RestClient.USERNAME_EXISTS_METHOD_PATH, params[0]);
+            String response = RestClient.myDbGet(RestClient.USERNAME_EXISTS, params[0]);
             JsonObject jsonObject;
             if (!TextUtils.isEmpty(response)) {
                 jsonObject = new JsonParser().parse(response).getAsJsonObject();
