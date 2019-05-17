@@ -50,7 +50,6 @@
     <string name="btn_add_food">ADD</string>
     <string name="add_food_dialog_title">Add New Food</string>
     <string name="alphabetical_digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
-    <string name="saved_calorie_goal_key">SAVED_CALORIE_GOAL_PREFERENCE_KEY</string>
     <string name="btn_add">ADD</string>
     <string name="btn_edit">EDIT</string>
     <string name="btn_delete">DELETE</string>
@@ -58,4 +57,5 @@
     <string name="tracker_steps">Steps Taken</string>
     <string name="tracker_cal_consumed">Calories Consumed</string>
     <string name="tracker_cal_burned">Calories Burned</string>
+    <string name="btn_food_consumed">CONSUMED</string>
 </resources>

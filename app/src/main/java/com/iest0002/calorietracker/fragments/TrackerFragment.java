@@ -38,9 +38,12 @@ public class TrackerFragment extends Fragment {
         tvCalConsumed = vTracker.findViewById(R.id.tv_tracker_consumed);
         tvCalBurned = vTracker.findViewById(R.id.tv_tracker_burned);
 
-        SharedPreferences sharedPrefCalGoal = getActivity().getPreferences(Context.MODE_PRIVATE);
-        int calorieGoalDefault = getResources().getInteger(R.integer.saved_calorie_goal_default_value);
-        int calorieGoalKey = sharedPrefCalGoal.getInt(getResources().getString(R.string.saved_calorie_goal_key), calorieGoalDefault);
+        SharedPreferences sharedPrefCalGoal = getActivity().getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        int calorieGoalDefault = getResources().getInteger(R.integer.saved_default_cal_goal);
+        int calorieGoalKey = sharedPrefCalGoal.getInt(getResources().getString(R.string.saved_cal_goal_key), calorieGoalDefault);
         tvGoal.setText(String.valueOf(calorieGoalKey));
 
         GetStepsAsyncTask getSteps = new GetStepsAsyncTask();

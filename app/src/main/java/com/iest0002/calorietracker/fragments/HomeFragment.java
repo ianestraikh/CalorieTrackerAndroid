@@ -21,7 +21,7 @@ import com.iest0002.calorietracker.MainActivity;
 import com.iest0002.calorietracker.R;
 
 public class HomeFragment extends Fragment {
-    SharedPreferences sharedPrefCalGoal;
+    SharedPreferences sharedPref;
     private View vHome;
     private TextView tvHelloUser, tvCalGoal;
     private Button btnCalGoal;
@@ -40,13 +40,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        GetNameAsyncTask getName = new GetNameAsyncTask();
-        getName.execute();
-
-        sharedPrefCalGoal = getActivity().getPreferences(Context.MODE_PRIVATE);
-        int calorieGoalDefault = getResources().getInteger(R.integer.saved_calorie_goal_default_value);
-        int calorieGoalKey = sharedPrefCalGoal.getInt(getResources().getString(R.string.saved_calorie_goal_key), calorieGoalDefault);
+        sharedPref = getActivity().getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        int calorieGoalDefault = getResources().getInteger(R.integer.saved_default_cal_goal);
+        int calorieGoalKey = sharedPref.getInt(getResources().getString(R.string.saved_cal_goal_key), calorieGoalDefault);
+        String fname = sharedPref.getString(getResources().getString(R.string.saved_user_fname_key), "%fname");
         tvCalGoal.setText(String.valueOf(calorieGoalKey));
+        tvHelloUser.setText(getResources().getString(R.string.hello_user, fname));
 
         return vHome;
     }
@@ -75,9 +77,9 @@ public class HomeFragment extends Fragment {
                 if (TextUtils.isEmpty(inputNumber)) {
                     return;
                 }
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(getString(R.string.saved_calorie_goal_key), Integer.parseInt(inputNumber));
+                editor.putInt(getString(R.string.saved_cal_goal_key), Integer.parseInt(inputNumber));
+                editor.apply();
                 tvCalGoal.setText(inputNumber);
                 editor.apply();
                 dialog.cancel();
@@ -92,21 +94,4 @@ public class HomeFragment extends Fragment {
 
         builder.show();
     }
-
-    private class GetNameAsyncTask extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return ((MainActivity) getActivity()).getDb().userDao().getFirstName().get(0);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            // ref: https://stackoverflow.com/questions/46129389/how-to-concat-two-strings-in-settext-in-android
-            tvHelloUser.setText(getResources().getString(R.string.hello_user, s));
-        }
-
-
-    }
-
 }

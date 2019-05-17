@@ -2,7 +2,9 @@ package com.iest0002.calorietracker;
 
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -17,21 +19,27 @@ import com.iest0002.calorietracker.fragments.LoginFragment;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private ProgressDialog progressDialog;
-
-    private AppDatabase db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
-                .fallbackToDestructiveMigration()
-                .build();
-
-        CheckDatabaseAsyncTask checkDatabase = new CheckDatabaseAsyncTask();
-        checkDatabase.execute();
+        SharedPreferences sharedPref = this.getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        int userIdDefault = getResources().getInteger(R.integer.saved_default_user_id);
+        int userId = sharedPref.getInt(getResources().getString(R.string.saved_user_id_key), userIdDefault);
+        if (userId != userIdDefault) {
+            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.activity_welcome, new LoginFragment())
+                    .commit();
+        }
 
     }
 
@@ -45,37 +53,5 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         }
         return isNotEmpty;
-    }
-
-    public AppDatabase getDb() {
-        return db;
-    }
-
-    private class CheckDatabaseAsyncTask extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... s) {
-            return db.userDao().count() == 0;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(WelcomeActivity.this, null, "Loading...", true);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean isDbEmpty) {
-            progressDialog.cancel();
-            if (isDbEmpty) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.activity_welcome, new LoginFragment())
-                        .commit();
-            } else {
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
     }
 }

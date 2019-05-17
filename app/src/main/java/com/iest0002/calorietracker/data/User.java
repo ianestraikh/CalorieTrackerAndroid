@@ -1,15 +1,11 @@
 package com.iest0002.calorietracker.data;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Entity
+
 public class User {
-    @PrimaryKey
     private int userId;
     private String fname;
     private String lname;

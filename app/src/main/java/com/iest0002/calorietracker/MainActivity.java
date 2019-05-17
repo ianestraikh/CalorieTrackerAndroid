@@ -2,8 +2,10 @@ package com.iest0002.calorietracker;
 
 import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -29,10 +30,6 @@ import com.iest0002.calorietracker.fragments.TrackerFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private AppDatabase db;
-    private TextView tvNavHeaderTitle;
-    private TextView tvNavHeaderSubtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +47,30 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, new HomeFragment()).commit();
-
+        /*
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
                 .fallbackToDestructiveMigration()
                 .build();
+        */
 
-        View headerView =  navigationView.getHeaderView(0);
+        View headerView = navigationView.getHeaderView(0);
+        //private AppDatabase db;
+        TextView tvNavHeaderTitle = headerView.findViewById(R.id.tv_nav_header_title);
+        TextView tvNavHeaderSubtitle = headerView.findViewById(R.id.tv_nav_header_subtitle);
 
-        tvNavHeaderTitle = headerView.findViewById(R.id.tv_nav_header_title);
-        tvNavHeaderSubtitle = headerView.findViewById(R.id.tv_nav_header_subtitle);
-        SetNavTitleAsyncTask setNavTitle = new SetNavTitleAsyncTask();
-        setNavTitle.execute();
+        SharedPreferences sharedPref = this.getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        String fname = sharedPref.getString(getResources().getString(R.string.saved_user_fname_key), "%fname%");
+        String lname = sharedPref.getString(getResources().getString(R.string.saved_user_lname_key), "%lname");
+        String email = sharedPref.getString(getResources().getString(R.string.saved_email_key), "%email%");
+
+        tvNavHeaderTitle.setText(String.format("%s %s", fname, lname));
+        tvNavHeaderSubtitle.setText(email);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, new HomeFragment()).commit();
     }
 
     @Override
@@ -73,28 +81,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -120,8 +106,17 @@ public class MainActivity extends AppCompatActivity
                     .setMessage("Are you sure you want to logout?")
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            DeleteUserAsyncTask deleteUser = new DeleteUserAsyncTask();
-                            deleteUser.execute();
+                            SharedPreferences sharedPref = MainActivity.this.getSharedPreferences(
+                                    getString(R.string.preference_file_key),
+                                    Context.MODE_PRIVATE
+                            );
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.clear();
+                            editor.apply();
+
+                            ClearDbAsyncTask clearDb = new ClearDbAsyncTask();
+                            clearDb.execute();
+
                             Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
                             startActivity(intent);
                             finish();
@@ -138,34 +133,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public AppDatabase getDb() {
-        return db;
-    }
-
-    private class DeleteUserAsyncTask extends AsyncTask<Void, Void, Void> {
-
+    private class ClearDbAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            db.userDao().deleteAll();
+            AppDatabase db = Room.databaseBuilder(MainActivity.this, AppDatabase.class, "AppDatabase")
+                    .fallbackToDestructiveMigration()
+                    .build();
+            db.clearAllTables();
             return null;
-        }
-    }
-
-    private class SetNavTitleAsyncTask extends AsyncTask<Void, Void, String[]> {
-
-        @Override
-        protected String[] doInBackground(Void... voids) {
-            String fname = db.userDao().getFirstName().get(0);
-            String lname = db.userDao().getLastName().get(0);
-            String fullName = String.format("%s %s", fname, lname);
-            String email = db.userDao().getEmail().get(0);
-            return new String[]{fullName, email};
-        }
-
-        @Override
-        protected void onPostExecute(String... s) {
-            tvNavHeaderTitle.setText(s[0]);
-            tvNavHeaderSubtitle.setText(s[1]);
         }
     }
 }

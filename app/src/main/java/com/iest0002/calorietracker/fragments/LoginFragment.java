@@ -2,9 +2,12 @@ package com.iest0002.calorietracker.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -61,6 +64,7 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+
         bSignup = vLogin.findViewById(R.id.btn_signup);
         bSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,8 +147,20 @@ public class LoginFragment extends Fragment {
                 return false;
             }
 
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+            );
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(getString(R.string.saved_user_id_key), cred.getUserId().getUserId());
+            editor.putString(getString(R.string.saved_user_fname_key), cred.getUserId().getFname());
+            editor.putString(getString(R.string.saved_user_lname_key), cred.getUserId().getLname());
+            editor.putString(getString(R.string.saved_email_key), cred.getUserId().getEmail());
+            editor.commit();
+            /*
             AppDatabase db = ((WelcomeActivity) getActivity()).getDb();
             db.userDao().insert(cred.getUserId());
+            */
             return true;
         }
 
