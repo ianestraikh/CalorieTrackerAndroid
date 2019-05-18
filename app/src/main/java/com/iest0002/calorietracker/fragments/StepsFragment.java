@@ -42,6 +42,10 @@ public class StepsFragment extends Fragment {
         View vSteps = inflater.inflate(R.layout.fragment_steps, container, false);
         listView = vSteps.findViewById(R.id.lv_steps);
 
+        db = Room.databaseBuilder(getActivity(), AppDatabase.class, "AppDatabase")
+                .fallbackToDestructiveMigration()
+                .build();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -49,10 +53,6 @@ public class StepsFragment extends Fragment {
                 showEditSteps(steps, position);
             }
         });
-
-        db = Room.databaseBuilder(getContext(), AppDatabase.class, "AppDatabase")
-                .fallbackToDestructiveMigration()
-                .build();
 
         GetStepsAsyncTask getSteps = new GetStepsAsyncTask();
         getSteps.execute();
@@ -74,7 +74,7 @@ public class StepsFragment extends Fragment {
         builder.setTitle("Add Steps");
         builder.setCancelable(false);
 
-        final EditText input = new EditText(getContext());
+        final EditText input = new EditText(getActivity());
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setFilters(new InputFilter[] {
                 new InputFilter.LengthFilter(5)
@@ -106,11 +106,11 @@ public class StepsFragment extends Fragment {
     }
 
     public void showEditSteps(final Steps steps, final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Edit steps");
         builder.setCancelable(false);
 
-        final EditText input = new EditText(getContext());
+        final EditText input = new EditText(getActivity());
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setText(Integer.toString(steps.getStepsAmount()));
         input.setFilters(new InputFilter[] {
@@ -128,8 +128,9 @@ public class StepsFragment extends Fragment {
                 list.set(position, new Steps(newStepsAmount, steps.getDate()));
                 stepsAdapter.notifyDataSetChanged();
 
+                steps.setStepsAmount(newStepsAmount);
                 UpdateStepsAsyncTask updateSteps = new UpdateStepsAsyncTask();
-                updateSteps.execute(newStepsAmount, steps.getId());
+                updateSteps.execute(steps);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -152,7 +153,7 @@ public class StepsFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Steps> stepsList) {
             list = (ArrayList) stepsList;
-            stepsAdapter = new StepsAdapter(getContext(), stepsList);
+            stepsAdapter = new StepsAdapter(getActivity(), stepsList);
             listView.setAdapter(stepsAdapter);
         }
     }
@@ -178,13 +179,11 @@ public class StepsFragment extends Fragment {
         }
     }
 
-    private class UpdateStepsAsyncTask extends AsyncTask<Integer, Void, Void> {
+    private class UpdateStepsAsyncTask extends AsyncTask<Steps, Void, Void> {
         @Override
-        protected Void doInBackground(Integer... ints) {
-            db.stepsDao().update(ints[0], ints[1]);
+        protected Void doInBackground(Steps... steps) {
+            db.stepsDao().update(steps);
             return null;
         }
     }
-
-
 }

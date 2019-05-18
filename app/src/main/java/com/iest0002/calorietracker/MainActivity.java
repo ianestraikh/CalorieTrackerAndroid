@@ -28,8 +28,6 @@ import com.iest0002.calorietracker.fragments.ReportFragment;
 import com.iest0002.calorietracker.fragments.StepsFragment;
 import com.iest0002.calorietracker.fragments.TrackerFragment;
 
-import static java.security.AccessController.getContext;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -48,12 +46,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        /*
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
-                .fallbackToDestructiveMigration()
-                .build();
-        */
 
         View headerView = navigationView.getHeaderView(0);
 
@@ -141,7 +133,7 @@ public class MainActivity extends AppCompatActivity
             AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
                     .fallbackToDestructiveMigration()
                     .build();
-            db.stepsDao().deleteAll();
+            db.clearAllTables();
             return null;
         }
     }

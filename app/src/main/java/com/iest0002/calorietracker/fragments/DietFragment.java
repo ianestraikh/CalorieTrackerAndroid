@@ -236,7 +236,7 @@ public class DietFragment extends Fragment {
                 }
 
                 if (snippet != null && imgUrl != null) {
-                    Glide.with(getContext())
+                    Glide.with(getActivity())
                             .load(imgUrl)
                             .into(ivFood);
                     snippet = snippet.replace("\r\n", " ").replace("\n", " ");

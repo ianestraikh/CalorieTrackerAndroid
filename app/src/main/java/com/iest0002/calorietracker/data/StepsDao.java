@@ -24,9 +24,6 @@ public interface StepsDao {
     @Query("SELECT stepsAmount from steps")
     List<Integer> getStepsAmount();
 
-    @Query("UPDATE steps SET stepsAmount = :stepsAmount WHERE id = :id")
-    void update(int stepsAmount, int id);
-
     @Query("SELECT SUM(stepsAmount) from steps")
     int sumStepsAmount();
 
@@ -37,7 +34,7 @@ public interface StepsDao {
     void delete(Steps steps);
 
     @Update(onConflict = REPLACE)
-    void updateUsers(Steps... steps);
+    void update(Steps... steps);
 
     @Query("DELETE FROM steps")
     void deleteAll();

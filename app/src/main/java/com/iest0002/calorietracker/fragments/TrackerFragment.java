@@ -35,7 +35,7 @@ public class TrackerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vTracker = inflater.inflate(R.layout.fragment_tracker, container, false);
 
-        db = Room.databaseBuilder(getContext(), AppDatabase.class, "AppDatabase")
+        db = Room.databaseBuilder(getActivity(), AppDatabase.class, "AppDatabase")
                 .fallbackToDestructiveMigration()
                 .build();
 

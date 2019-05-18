@@ -134,7 +134,7 @@ public class SignupFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             EditText etDob = getActivity().findViewById(R.id.et_dob);
-            etDob.setText(String.format(Locale.ENGLISH, "%d/%d/%d", day, month, year));
+            etDob.setText(String.format(Locale.ENGLISH, "%d/%d/%d", day, month + 1, year));
             etDob.setError(null);
         }
     }
