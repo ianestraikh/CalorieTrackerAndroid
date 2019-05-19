@@ -198,10 +198,7 @@ public class DietFragment extends Fragment {
                 foodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnFood.setAdapter(foodAdapter);
             } else {
-                new AlertDialog.Builder(getContext())
-                        .setMessage("Check your internet connection")
-                        .setCancelable(false)
-                        .setNegativeButton(android.R.string.no, null)
+                Toast.makeText(getContext(), R.string.msg_something_went_wrong, Toast.LENGTH_SHORT)
                         .show();
             }
         }
@@ -251,10 +248,7 @@ public class DietFragment extends Fragment {
                     flFoodDesc.setVisibility(View.INVISIBLE);
                 }
             } else {
-                new AlertDialog.Builder(getContext())
-                        .setMessage("Check your internet connection")
-                        .setCancelable(false)
-                        .setNegativeButton(android.R.string.no, null)
+                Toast.makeText(getContext(), R.string.msg_check_connection, Toast.LENGTH_SHORT)
                         .show();
             }
         }

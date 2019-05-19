@@ -56,6 +56,9 @@
     <string name="msg_check_connection">Check your internet connection</string>
     <string name="msg_something_went_wrong">Something went wrong</string>
     <string name="msg_address_error">Your home address can not be found</string>
+    <string name="msg_email_not_available">This email is not available</string>
+    <string name="msg_username_not_available">This username is not available</string>
+    <string name="msg_try_again">Try again</string>
     <string name="pie_chart_title">Pie Chart</string>
     <string name="et_date_hint">Pick date</string>
     <string name="tv_bar_title">Bar Chart</string>

@@ -110,9 +110,10 @@ public class LoginFragment extends Fragment {
                         .commit();
                 return;
             } else if (usernameCount >0) {
-                alertMessage = "This username isn't available";
+                //TODO change datatype to int
+                alertMessage = getString(R.string.msg_username_not_available);
             } else {
-                alertMessage = "Try again";
+                alertMessage = getString(R.string.msg_try_again);
             }
             new AlertDialog.Builder(getContext())
                     .setMessage(alertMessage)
@@ -169,7 +170,7 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
             } else {
                 new AlertDialog.Builder(getContext())
-                        .setMessage("Try again")
+                        .setMessage(R.string.msg_try_again)
                         .setNegativeButton(android.R.string.no, null)
                         .show();
             }

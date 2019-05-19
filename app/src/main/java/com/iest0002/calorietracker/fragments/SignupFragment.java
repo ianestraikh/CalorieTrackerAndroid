@@ -22,9 +22,12 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.iest0002.calorietracker.R;
 import com.iest0002.calorietracker.WelcomeActivity;
 import com.iest0002.calorietracker.data.Credential;
@@ -139,13 +142,18 @@ public class SignupFragment extends Fragment {
         }
     }
 
-    private class PostAsyncTask extends AsyncTask<String, Void, Boolean> {
+    private class PostAsyncTask extends AsyncTask<String, Void, Integer> {
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(getActivity(), null, "Loading...", true);
         }
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected Integer doInBackground(String... params) {
+            String emailResponse = RestClient.myDbGet(RestClient.FIND_USER_BY_EMAIL, params[2]);
+            if (new JsonParser().parse(emailResponse).getAsJsonArray().size() != 0) {
+                return -1;
+            }
+
             User user = new User(
                     params[0],
                     params[1],
@@ -165,7 +173,7 @@ public class SignupFragment extends Fragment {
             if (!TextUtils.isEmpty(responseMessage)) {
                 returnedUser = gson.fromJson(responseMessage, User.class);
             } else {
-                return false;
+                return 0;
             }
 
             // hash password
@@ -179,14 +187,17 @@ public class SignupFragment extends Fragment {
                     returnedUser
             );
             responseMessage = RestClient.post(RestClient.CRED_METHOD_PATH, cred);
-            return !TextUtils.isEmpty(responseMessage);
+            if (!TextUtils.isEmpty(responseMessage))
+                return 1;
+            return 0;
         }
 
         @Override
-        protected void onPostExecute(Boolean isUserCreated) {
+        protected void onPostExecute(Integer isUserCreated) {
             progressDialog.cancel();
-            if (isUserCreated) {
+            if (isUserCreated == 1) {
                 new AlertDialog.Builder(getContext())
+                        //TODO put this string inside resource file
                         .setMessage("Your account has been created!")
                         .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -194,10 +205,11 @@ public class SignupFragment extends Fragment {
                                 getFragmentManager().popBackStack();
                             }
                         }).show();
+            } else if (isUserCreated == 0){
+                Toast.makeText(getContext(), R.string.msg_something_went_wrong, Toast.LENGTH_SHORT)
+                        .show();
             } else {
-                new AlertDialog.Builder(getContext())
-                        .setMessage("Something went wrong")
-                        .setNegativeButton(android.R.string.ok, null)
+                Toast.makeText(getContext(), R.string.msg_email_not_available, Toast.LENGTH_SHORT)
                         .show();
             }
         }
