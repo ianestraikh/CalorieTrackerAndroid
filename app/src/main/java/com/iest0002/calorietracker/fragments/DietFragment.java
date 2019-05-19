@@ -215,7 +215,7 @@ public class DietFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            return RestClient.googleSearchGet(strings[0]);
+            return RestClient.googleGet(RestClient.GOOGLE_SEARCH, strings[0]);
         }
 
         @Override

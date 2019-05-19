@@ -154,11 +154,10 @@ public class LoginFragment extends Fragment {
             editor.putString(getString(R.string.saved_user_fname_key), cred.getUserId().getFname());
             editor.putString(getString(R.string.saved_user_lname_key), cred.getUserId().getLname());
             editor.putString(getString(R.string.saved_email_key), cred.getUserId().getEmail());
+            editor.putString(getString(R.string.saved_user_address), String.format("%s %s",
+                    cred.getUserId().getAddress(), cred.getUserId().getPostcode()));
             editor.commit();
-            /*
-            AppDatabase db = ((WelcomeActivity) getActivity()).getDb();
-            db.userDao().insert(cred.getUserId());
-            */
+
             return true;
         }
 

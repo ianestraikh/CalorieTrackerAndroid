@@ -14,3 +14,4 @@
 
 # Ignore the file with API keys
 /app/src/main/java/com/iest0002/calorietracker/data/Constants.java
+/app/src/main/res/values/google_maps_api.xml

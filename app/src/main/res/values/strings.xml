@@ -54,8 +54,11 @@
     <string name="tracker_cal_burned">Calories Burned</string>
     <string name="btn_food_consumed">CONSUMED</string>
     <string name="msg_check_connection">Check your internet connection</string>
+    <string name="msg_something_went_wrong">Something went wrong</string>
+    <string name="msg_address_error">Your home address can not be found</string>
     <string name="pie_chart_title">Pie Chart</string>
     <string name="et_date_hint">Pick date</string>
     <string name="tv_bar_title">Bar Chart</string>
     <string name="btn_draw_chart">DRAW</string>
+    <string name="btn_show_parks">SHOW PARKS</string>
 </resources>

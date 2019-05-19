@@ -30,11 +30,14 @@ public class RestClient {
     public static final String CALC_CAL_BURNED = "entities.usr/calculateCaloriesBurned/";
     public static final String GET_REPORT_BY_DATE = "entities.report/getReportByUserIdAndDate/";
     public static final String GET_REPORT_PER_DAY = "entities.report/getReportPerDay/";
+    public static final String FIND_USER_BY_EMAIL = ""
 
     public static final String NDB_FOOD = String.format("https://api.nal.usda.gov/ndb/V2/reports?ndbno=%%s&type=b&format=json&api_key=%s", Constants.NDB_KEY);
     public static final String NDB_FOOD_ID = String.format("https://api.nal.usda.gov/ndb/search/?format=json&q=%%s&sort=n&max=25&offset=0&api_key=%s&ds=Standard+Reference", Constants.NDB_KEY);
 
     public static final String GOOGLE_SEARCH = String.format("https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=%%s", Constants.GOOGLE_SEARCH_KEY, Constants.GOOGLE_SEARCH_CX);
+
+    public static final String OPENCAGE = String.format("https://api.opencagedata.com/geocode/v1/json?q=%%s&key=%s", Constants.OPENCAGE_KEY);
 
     /**
      * ref: FIT5046 Week7 tutorial
@@ -102,9 +105,25 @@ public class RestClient {
         return get(spec);
     }
 
-    public static String googleSearchGet(String query) {
+    public static String openCageGet(String address) {
+        address = URLEncoder.encode(address);
+        String spec = String.format(OPENCAGE, address);
+        return get(spec);
+    }
+
+    public static String googleGet(String path, String query) {
         query = URLEncoder.encode(query);
-        String spec = String.format(GOOGLE_SEARCH, query);
+        String spec = String.format(path, query);
+        return get(spec);
+    }
+
+    public static String foursquareGet(String query) {
+        query = URLEncoder.encode(query);
+        String path = "https://api.foursquare.com/v2/venues/search?" +
+                "client_id=%s" +
+                "&client_secret=%s" +
+                "&ll=%s&radius=5000&v=20190519&categoryId=4bf58dd8d48988d163941735";
+        String spec = String.format(path, Constants.FOURSQUARE_CLIENT_ID, Constants.FOURSQUARE_CLIENT_SECRET, query);
         return get(spec);
     }
 
