@@ -17,11 +17,10 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.iest0002.calorietracker.MainActivity;
 import com.iest0002.calorietracker.R;
 import com.iest0002.calorietracker.data.AppDatabase;
 import com.iest0002.calorietracker.data.Steps;
-import com.iest0002.calorietracker.views.StepsAdapter;
+import com.iest0002.calorietracker.StepsAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;

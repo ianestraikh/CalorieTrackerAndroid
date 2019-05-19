@@ -1,4 +1,4 @@
-package com.iest0002.calorietracker.views;
+package com.iest0002.calorietracker;
 
 import android.content.Context;
 import android.view.LayoutInflater;

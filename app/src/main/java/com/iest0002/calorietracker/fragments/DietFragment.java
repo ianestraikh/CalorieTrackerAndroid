@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -122,6 +123,16 @@ public class DietFragment extends Fragment {
 
         GetCategoriesAsyncTask getCategories = new GetCategoriesAsyncTask();
         getCategories.execute();
+
+        ImageButton btnRefresh = vDiet.findViewById(R.id.btn_diet_refresh);
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetCategoriesAsyncTask getCategories = new GetCategoriesAsyncTask();
+                getCategories.execute();
+            }
+        });
+
         return vDiet;
     }
 
