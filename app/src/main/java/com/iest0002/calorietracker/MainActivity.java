@@ -1,6 +1,8 @@
 package com.iest0002.calorietracker;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,8 +30,14 @@ import com.iest0002.calorietracker.fragments.ReportFragment;
 import com.iest0002.calorietracker.fragments.StepsFragment;
 import com.iest0002.calorietracker.fragments.TrackerFragment;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private AlarmManager alarmMgr;
+    private Intent alarmIntent;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,20 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, new HomeFragment()).commit();
+
+        // Set the alarm to start at approximately 11:55 p.m.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 30);
+
+        alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarmIntent = new Intent(this, ScheduledIntentService.class);
+        pendingIntent = PendingIntent.getService(this, 0, alarmIntent, 0);
+
+        alarmMgr.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     @Override

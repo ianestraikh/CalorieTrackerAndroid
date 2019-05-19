@@ -10,11 +10,10 @@ public class Report {
     private double caloriesBurned;
     private int stepsTaken;
     private double calorieGoal;
-    private int userId;
+    private User userId;
 
-    public Report(int reportId, Date reportDate, double caloriesConsumed, double caloriesBurned,
-                  int stepsTaken, double calorieGoal, int userId) {
-        this.reportId = reportId;
+    public Report(Date reportDate, double caloriesConsumed, double caloriesBurned,
+                  int stepsTaken, double calorieGoal, User userId) {
         this.reportDate = reportDate;
         this.caloriesConsumed = caloriesConsumed;
         this.caloriesBurned = caloriesBurned;
@@ -71,11 +70,11 @@ public class Report {
         this.calorieGoal = calorieGoal;
     }
 
-    public int getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 }

@@ -31,6 +31,7 @@ public class RestClient {
     public static final String GET_REPORT_BY_DATE = "entities.report/getReportByUserIdAndDate/";
     public static final String GET_REPORT_PER_DAY = "entities.report/getReportPerDay/";
     public static final String FIND_USER_BY_EMAIL = "entities.usr/findByUserEmail/";
+    public static final String REPORT_METHOD_PATH = "entities.report/";
 
     public static final String NDB_FOOD = String.format("https://api.nal.usda.gov/ndb/V2/reports?ndbno=%%s&type=b&format=json&api_key=%s", Constants.NDB_KEY);
     public static final String NDB_FOOD_ID = String.format("https://api.nal.usda.gov/ndb/search/?format=json&q=%%s&sort=n&max=25&offset=0&api_key=%s&ds=Standard+Reference", Constants.NDB_KEY);

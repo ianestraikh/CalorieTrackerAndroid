@@ -115,8 +115,8 @@ public class TrackerFragment extends Fragment {
         protected void onPostExecute(String s) {
             if (!TextUtils.isEmpty(s)) {
                 JsonObject jsonObject = new JsonParser().parse(s).getAsJsonObject();
-                String calConsumed = jsonObject.get("caloriesBurned").getAsString();
-                tvCalBurned.setText(calConsumed);
+                String calBurned = jsonObject.get("caloriesBurned").getAsString();
+                tvCalBurned.setText(calBurned);
             } else {
                 Toast.makeText(getContext(), getString(R.string.msg_check_connection), Toast.LENGTH_SHORT)
                         .show();

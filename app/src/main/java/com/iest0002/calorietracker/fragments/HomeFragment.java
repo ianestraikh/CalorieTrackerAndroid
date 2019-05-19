@@ -3,6 +3,7 @@ package com.iest0002.calorietracker.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,12 +20,13 @@ import android.widget.TextView;
 
 import com.iest0002.calorietracker.MainActivity;
 import com.iest0002.calorietracker.R;
+import com.iest0002.calorietracker.ScheduledIntentService;
 
 public class HomeFragment extends Fragment {
     SharedPreferences sharedPref;
     private View vHome;
     private TextView tvHelloUser, tvCalGoal;
-    private Button btnCalGoal;
+    private Button btnCalGoal, btnSendReport;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +51,15 @@ public class HomeFragment extends Fragment {
         String fname = sharedPref.getString(getResources().getString(R.string.saved_user_fname_key), "%fname");
         tvCalGoal.setText(String.valueOf(calorieGoalKey));
         tvHelloUser.setText(getResources().getString(R.string.hello_user, fname));
+
+        btnSendReport = vHome.findViewById(R.id.btn_send_report);
+        btnSendReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ScheduledIntentService.class);
+                getActivity().startService(intent);
+            }
+        });
 
         return vHome;
     }

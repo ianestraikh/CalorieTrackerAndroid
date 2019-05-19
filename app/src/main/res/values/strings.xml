@@ -64,4 +64,5 @@
     <string name="tv_bar_title">Bar Chart</string>
     <string name="btn_draw_chart">DRAW</string>
     <string name="btn_show_parks">SHOW PARKS</string>
+    <string name="btn_send_report">Send Report</string>
 </resources>
