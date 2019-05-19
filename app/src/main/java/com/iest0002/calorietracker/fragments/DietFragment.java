@@ -207,7 +207,7 @@ public class DietFragment extends Fragment {
     private class GoogleSearchAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
+            progressDialog = ProgressDialog.show(getActivity(), null, "Loading...", true);
         }
 
         @Override
@@ -217,6 +217,7 @@ public class DietFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String response) {
+            progressDialog.cancel();
             if (!TextUtils.isEmpty(response)) {
                 Gson gson = new GsonBuilder()
                         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)

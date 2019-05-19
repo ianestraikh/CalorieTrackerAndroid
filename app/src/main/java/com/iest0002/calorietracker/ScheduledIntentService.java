@@ -81,7 +81,7 @@ public class ScheduledIntentService extends IntentService {
 
         db.stepsDao().deleteAll();
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.clear();
+        editor.remove(getResources().getString(R.string.saved_user_id_key));
         editor.apply();
     }
 

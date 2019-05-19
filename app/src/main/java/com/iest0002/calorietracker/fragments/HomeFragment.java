@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
                 getString(R.string.preference_file_key),
                 Context.MODE_PRIVATE
         );
-        int calorieGoalDefault = getResources().getInteger(R.integer.saved_default_cal_goal);
+        final int calorieGoalDefault = getResources().getInteger(R.integer.saved_default_cal_goal);
         int calorieGoalKey = sharedPref.getInt(getResources().getString(R.string.saved_cal_goal_key), calorieGoalDefault);
         String fname = sharedPref.getString(getResources().getString(R.string.saved_user_fname_key), "%fname");
         tvCalGoal.setText(String.valueOf(calorieGoalKey));
@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
         btnSendReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvCalGoal.setText(Integer.toString(calorieGoalDefault));
                 Intent intent = new Intent(getActivity(), ScheduledIntentService.class);
                 getActivity().startService(intent);
             }
