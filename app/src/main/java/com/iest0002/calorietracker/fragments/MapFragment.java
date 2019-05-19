@@ -41,6 +41,8 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vMap = inflater.inflate(R.layout.fragment_map, container, false);
 
+        getActivity().setTitle(R.string.fr_title_map);
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences(
                 getString(R.string.preference_file_key),
                 Context.MODE_PRIVATE

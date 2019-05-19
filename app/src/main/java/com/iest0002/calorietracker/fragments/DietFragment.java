@@ -56,6 +56,8 @@ public class DietFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vDiet = inflater.inflate(R.layout.fragment_diet, container, false);
 
+        getActivity().setTitle(R.string.fr_title_diet);
+
         tvCalAmount = vDiet.findViewById(R.id.tv_cal_amount);
         tvFat = vDiet.findViewById(R.id.tv_fat);
         tvServUnit = vDiet.findViewById(R.id.tv_serv_unit);

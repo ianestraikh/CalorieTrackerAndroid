@@ -59,6 +59,8 @@ public class ReportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vReport = inflater.inflate(R.layout.fragment_report, container, false);
 
+        getActivity().setTitle(R.string.fr_title_report);
+
         etPieDate = vReport.findViewById(R.id.et_pie_date);
         etBarDate1 = vReport.findViewById(R.id.et_bar_date1);
         etBarDate2 = vReport.findViewById(R.id.et_bar_date2);

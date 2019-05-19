@@ -32,6 +32,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vHome = inflater.inflate(R.layout.fragment_home, container, false);
 
+        getActivity().setTitle(R.string.ft_title_home);
+
         tvHelloUser = vHome.findViewById(R.id.tv_hello_user);
         tvCalGoal = vHome.findViewById(R.id.tv_goal);
         btnCalGoal = vHome.findViewById(R.id.btn_add_cal_goal);

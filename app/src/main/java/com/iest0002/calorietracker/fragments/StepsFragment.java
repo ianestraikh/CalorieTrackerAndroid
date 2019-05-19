@@ -42,6 +42,8 @@ public class StepsFragment extends Fragment {
         View vSteps = inflater.inflate(R.layout.fragment_steps, container, false);
         listView = vSteps.findViewById(R.id.lv_steps);
 
+        getActivity().setTitle(R.string.fr_title_steps);
+
         db = Room.databaseBuilder(getActivity(), AppDatabase.class, "AppDatabase")
                 .fallbackToDestructiveMigration()
                 .build();
