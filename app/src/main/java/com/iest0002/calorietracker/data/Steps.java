@@ -1,15 +1,11 @@
 package com.iest0002.calorietracker.data;
 
-import android.annotation.TargetApi;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
+
 
 @Entity
 public class Steps {

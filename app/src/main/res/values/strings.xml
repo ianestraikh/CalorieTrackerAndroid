@@ -38,13 +38,13 @@
     <string name="food_category">Category</string>
     <string name="food">Food</string>
     <string name="logout">Logout</string>
-    <string name="hello_user">Hello, %1$s</string>
+    <string name="hello_user">Hello, %user%!</string>
     <string name="diet_cal">CAL:</string>
     <string name="diet_fat">FAT:</string>
     <string name="diet_unit">UNIT:</string>
     <string name="diet_serv">SERV:</string>
     <string name="enter_food_name">Enter food name</string>
-    <string name="btn_add_food">ADD</string>
+    <string name="btn_add">ADD</string>
     <string name="add_food_dialog_title">Add New Food</string>
     <string name="alphabetical_digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="btn_edit">EDIT</string>
@@ -72,5 +72,7 @@
     <string name="fr_title_report">Report</string>
     <string name="fr_title_map">Map</string>
     <string name="et_address_hint">Street, Suburb, State</string>
-    <string name="btn_diet_refresh">REFRESH</string>
+    <string name="underscore">_</string>
+    <string name="btn_refresh">Refresh</string>
+    <string name="today_goal">Today Goal</string>
 </resources>

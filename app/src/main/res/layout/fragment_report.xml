@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -17,11 +16,12 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="@string/et_date_hint"
-        android:inputType="none"
+        android:inputType="date"
         android:focusable="false"
         app:layout_constraintEnd_toStartOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_pie_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_pie_title"
+        android:importantForAutofill="no" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart"
@@ -82,10 +82,11 @@
         android:focusable="false"
         android:ems="10"
         android:hint="@string/et_date_hint"
-        android:inputType="none"
+        android:inputType="date"
         app:layout_constraintEnd_toStartOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bar_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_bar_title"
+        android:importantForAutofill="no"/>
 
     <EditText
         android:id="@+id/et_bar_date2"
@@ -97,26 +98,27 @@
         android:ems="10"
         android:focusable="false"
         android:hint="@string/et_date_hint"
-        android:inputType="none"
+        android:inputType="date"
         app:layout_constraintEnd_toStartOf="@+id/guideline17"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bar_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_bar_title"
+        android:importantForAutofill="no"/>
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.39" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,4 +150,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_bar_title" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

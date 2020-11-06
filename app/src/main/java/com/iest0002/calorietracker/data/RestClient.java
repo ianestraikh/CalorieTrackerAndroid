@@ -7,7 +7,6 @@ import com.google.gson.GsonBuilder;
 
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;

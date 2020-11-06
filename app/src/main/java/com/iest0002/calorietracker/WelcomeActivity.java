@@ -1,20 +1,17 @@
 package com.iest0002.calorietracker;
 
-import android.app.ProgressDialog;
-import android.arch.persistence.room.Room;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.iest0002.calorietracker.data.AppDatabase;
 import com.iest0002.calorietracker.fragments.LoginFragment;
 
 public class WelcomeActivity extends AppCompatActivity {

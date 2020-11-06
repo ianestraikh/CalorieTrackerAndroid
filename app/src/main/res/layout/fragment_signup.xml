@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -16,7 +17,9 @@
         android:layout_height="wrap_content"
         android:maxLength="10"
         android:digits="@string/alphabetical_digits"
-        android:inputType="text" />
+        android:inputType="text"
+        android:autofillHints="personGivenName"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +32,9 @@
         android:layout_height="wrap_content"
         android:maxLength="10"
         android:digits="@string/alphabetical_digits"
-        android:inputType="text" />
+        android:inputType="text"
+        android:autofillHints="personFamilyName"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,7 +45,9 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +58,10 @@
         android:id="@+id/et_dob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="false" />
+        android:focusable="false"
+        android:autofillHints="birthDateDay"
+        android:inputType="date"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,7 +73,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLength="4"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,7 +87,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLength="4"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="match_parent"
@@ -111,7 +125,10 @@
             android:id="@+id/et_dummy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:importantForAutofill="no"
+            android:inputType=""
+            tools:ignore="LabelFor" />
     </RelativeLayout>
 
     <TextView
@@ -124,7 +141,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/et_address_hint"
-        android:inputType="text" />
+        android:inputType="text"
+        android:autofillHints="postalAddress" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -136,7 +154,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:maxLength="4" />
+        android:maxLength="4"
+        android:autofillHints="extendedPostalCode"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -148,7 +168,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLength="5"
-        android:inputType="number" />
+        android:inputType="number"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"

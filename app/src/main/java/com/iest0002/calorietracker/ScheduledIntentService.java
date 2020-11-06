@@ -1,7 +1,7 @@
 package com.iest0002.calorietracker;
 
 import android.app.IntentService;
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
